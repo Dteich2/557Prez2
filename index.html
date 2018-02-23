@@ -82,7 +82,7 @@ void setup() {
     allLines[i].lineVal = i;
     for(int j = 0; j < dataCols; j++) {
       //println(i + " " + j);
-      allLines[i].vals[j] = float(table[i+1][j+1]);
+      allLines[i].vadls[j] = float(table[i+1][j+1]);
       array[i][j] = float(table[i+1][j+1]);
       if (array[i][j] > colMaxes[j]) {
         colMaxes[j] = array[i][j];    

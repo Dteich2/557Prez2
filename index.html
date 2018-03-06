@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <title>D3 Test</title>
         <script src="https://d3js.org/d3.v4.js"></script>
+        <!--Got some template advice from https://github.com/fletchjeff/zacartogram/blob/master/index.html-->
+       
         <style type="text/css">
         body {
             font-family:'Open Sans', sans-serif;
@@ -14,55 +16,35 @@
             margin: 0 auto;
             width: 600px;
         }
-        #map-container {
-            height: 500px;        
-            position: relative;
-            margin: 10px 0;
-        }
-        #map {
-            overflow: visible;
-        }
-        #click_to_run {
-            color:#888;
-            width: 600px;
-            font-size: 2em;
-            text-align: center;
-            cursor: pointer;
-            padding-top: 30px;
-        }
-        path.munic {
-            stroke: #AAA;
-            stroke-width: .5;
-        }
-        path.munic:hover {
-            stroke: #000;
-        }
+
+       
+        
     </style>
     </head>
     <body>
     <!--<div id="map-container">
         <svg id="map"></svg>
     </div>-->
-        <button id="1940Button" onclick="dataChanging(1940)" style="background-color: blue">1940</button>
-        <button id="1944Button" onclick="dataChanging(1944)" style="background-color: blue">1944</button>
-        <button id="1948Button" onclick="dataChanging(1948)" style="background-color: blue">1948</button>
-        <button id="1952Button" onclick="dataChanging(1952)" style="background-color: red">1952</button>
-        <button id="1956Button" onclick="dataChanging(1956)" style="background-color: red">1956</button>
-        <button id="1960Button" onclick="dataChanging(1960)" style="background-color: blue">1960</button>
-        <button id="1964Button" onclick="dataChanging(1964)" style="background-color: blue">1964</button>
-        <button id="1968Button" onclick="dataChanging(1968)" style="background-color: red">1968</button>
-        <button id="1972Button" onclick="dataChanging(1972)" style="background-color: red"> 1972</button>
-        <button id="1976Button" onclick="dataChanging(1976)" style="background-color: blue">1976</button>
-        <button id="1980Button" onclick="dataChanging(1980)" style="background-color: red">1980</button>
-        <button id="1984Button" onclick="dataChanging(1984)" style="background-color: red">1984</button>
-        <button id="1988Button" onclick="dataChanging(1988)" style="background-color: red">1988</button>
-        <button id="1992Button" onclick="dataChanging(1992)" style="background-color: blue">1992</button>
-        <button id="1996Button" onclick="dataChanging(1996)" style="background-color: blue">1996</button>
-        <button id="2000Button" onclick="dataChanging(2000)" style="background-color: red">2000</button>
-        <button id="2004Button" onclick="dataChanging(2004)" style="background-color: red">2004</button>
-        <button id="2008Button" onclick="dataChanging(2008)" style="background-color: blue">2008</button>
-        <button id="2012Button" onclick="dataChanging(2012)" style="background-color: blue">2012</button>
-        <button id="2016Button" onclick="dataChanging(2016)" style="background-color: red">2016</button>
+        <button id="1940Button" onclick="dataChanging(1940)" >1940</button>
+        <button id="1944Button" onclick="dataChanging(1944)" >1944</button>
+        <button id="1948Button" onclick="dataChanging(1948)" >1948</button>
+        <button id="1952Button" onclick="dataChanging(1952)" >1952</button>
+        <button id="1956Button" onclick="dataChanging(1956)" >1956</button>
+        <button id="1960Button" onclick="dataChanging(1960)" >1960</button>
+        <button id="1964Button" onclick="dataChanging(1964)" >1964</button>
+        <button id="1968Button" onclick="dataChanging(1968)" >1968</button>
+        <button id="1972Button" onclick="dataChanging(1972)" >1972</button>
+        <button id="1976Button" onclick="dataChanging(1976)" >1976</button>
+        <button id="1980Button" onclick="dataChanging(1980)" >1980</button>
+        <button id="1984Button" onclick="dataChanging(1984)" >1984</button>
+        <button id="1988Button" onclick="dataChanging(1988)" >1988</button>
+        <button id="1992Button" onclick="dataChanging(1992)" >1992</button>
+        <button id="1996Button" onclick="dataChanging(1996)" >1996</button>
+        <button id="2000Button" onclick="dataChanging(2000)" >2000</button>
+        <button id="2004Button" onclick="dataChanging(2004)" >2004</button>
+        <button id="2008Button" onclick="dataChanging(2008)" >2008</button>
+        <button id="2012Button" onclick="dataChanging(2012)" >2012</button>
+        <button id="2016Button" onclick="dataChanging(2016)" >2016</button>
 
 
     
@@ -80,34 +62,34 @@ var canvasW = 1200;
 var canvasH = 1200;
 
 const images = {
-    'HILARY CLINTON': "clinton.jpg",
-    'DONALD TRUMP': "trump.jpg",
-    'BARACK OBAMA': "obama.jpg",
-    'JOHN McCAIN': "mccain.jpg",
-    'MITT ROMNEY': "romney.jpg",
-    'GEORGE W. BUSH': "bush.jpg",
-    'JOHN KERRY': "kerry.jpg",
-    'ROBERT DOLE ': "dole.jpg",
-    'BILL CLINTON': "billclinton.jpg",
-    'AL GORE': "gore.jpg",
-    'MICHAEL S. DUKAKIS': "dukakis.jpg",
-    'WALTER MONDALE': "mondale.jpg",
-    'RONALD REAGAN': "reagan.jpg",
-    'GEORGE BUSH': "hwbush.jpg",
-    'JIMMY CARTER': "carter.jpg",
-    'GERALD R. FORD': "ford.jpg",
-    'RICHARD NIXON': "nixon.jpg",
-    'HUBERT HUMPHREY': "humphrey.jpg",
-    'GEORGE McGOVERN': "mcgovern.jpg",
-    'LYNDON B. JOHNSON': "johnson.jpg",
-    'BARRY M. GOLDWATER': "goldwater.jpg",
-    'ADLAI E. STEVENSON': "stevenson.jpg",
-    'JOHN F KENNEDY': "jfk.jpg",
-    'DWIGHT D. EISENHOWER': "eisenhower.jpg",
-    'WENDELL WILLKIE': "wilkie.jpg",
-    'FRANKLIN D. ROOSEVELT': "fdr.jpg",
-    'THOMAS E. DEWEY': "dewey.png",
-    'HARRY S TRUMAN': "truman.jpg"
+    'HILARY CLINTON': "presidentImages/clinton.jpg",
+    'DONALD TRUMP': "presidentImages/trump.jpg",
+    'BARACK OBAMA': "presidentImages/obama.jpg",
+    'JOHN McCAIN': "presidentImages/mccain.jpg",
+    'MITT ROMNEY': "presidentImages/romney.jpg",
+    'GEORGE W. BUSH': "presidentImages/bush.jpg",
+    'JOHN KERRY': "presidentImages/kerry.jpg",
+    'ROBERT DOLE ': "presidentImages/dole.jpg",
+    'BILL CLINTON': "presidentImages/billclinton.jpg",
+    'AL GORE': "presidentImages/gore.jpg",
+    'MICHAEL S. DUKAKIS': "presidentImages/dukakis.jpg",
+    'WALTER MONDALE': "presidentImages/mondale.jpg",
+    'RONALD REAGAN': "presidentImages/reagan.jpg",
+    'GEORGE BUSH': "presidentImages/hwbush.jpg",
+    'JIMMY CARTER': "presidentImages/carter.jpg",
+    'GERALD R. FORD': "presidentImages/ford.jpg",
+    'RICHARD NIXON': "presidentImages/nixon.jpg",
+    'HUBERT HUMPHREY': "presidentImages/humphrey.jpg",
+    'GEORGE McGOVERN': "presidentImages/mcgovern.jpg",
+    'LYNDON B. JOHNSON': "presidentImages/johnson.jpg",
+    'BARRY M. GOLDWATER': "presidentImages/goldwater.jpg",
+    'ADLAI E. STEVENSON': "presidentImages/stevenson.jpg",
+    'JOHN F KENNEDY': "presidentImages/jfk.jpg",
+    'DWIGHT D. EISENHOWER': "presidentImages/eisenhower.jpg",
+    'WENDELL WILLKIE': "presidentImages/wilkie.jpg",
+    'FRANKLIN D. ROOSEVELT': "presidentImages/fdr.jpg",
+    'THOMAS E. DEWEY': "presidentImages/dewey.png",
+    'HARRY S TRUMAN': "presidentImages/truman.jpg"
 }
 
 const XYvals = {
@@ -180,15 +162,26 @@ var year = 2016;
 
 function dataChanging(value) {
     year = value;
-    d3.csv("election-results-" + year + ".csv",function (data) {
+    d3.csv("electionResults/election-results-" + year + ".csv",function (data) {
         console.log(data);
         dataDoing(data);
     });
 }
 
-d3.csv("election-results-" + year + ".csv",function (data) {
+d3.csv("electionResults/election-results-" + year + ".csv",function (data) {
   console.log(data);
   dataDoing(data);
+});
+
+d3.csv("electionResults/yearwise-winner.csv",function (data) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].PARTY == "D") {
+           document.getElementById(data[i].YEAR + "Button").style.backgroundColor = "blue";
+        }
+        else {
+            document.getElementById(data[i].YEAR + "Button").style.backgroundColor = "red";
+        }
+    }
 });
   // var xAxis = d3.axisBottom(d3.scaleLinear().domain([0,10]).range([0,canvasW-150]));
   // var yAxis = d3.axisLeft(d3.scaleLinear().domain([10,0]).range([0,canvasH-150]));
@@ -354,7 +347,7 @@ var imageLegend = svg.append("svg:image")
                 .attr('y', 400)
                 .attr('width', 600)
                 .attr('height', 75)
-                .attr("xlink:href", "electoralmap-legend.png");
+                .attr("xlink:href", "presidentImages/electoralmap-legend.png");
 
 
         </script>

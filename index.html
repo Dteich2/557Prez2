@@ -12,16 +12,37 @@
             line-height: 1.4em;
             padding-top: 20px;
             margin: 0 auto;
-            width: 800px;
+            width: 600px;
         }
-        
+        #map-container {
+            height: 500px;        
+            position: relative;
+            margin: 10px 0;
+        }
+        #map {
+            overflow: visible;
+        }
+        #click_to_run {
+            color:#888;
+            width: 600px;
+            font-size: 2em;
+            text-align: center;
+            cursor: pointer;
+            padding-top: 30px;
+        }
+        path.munic {
+            stroke: #AAA;
+            stroke-width: .5;
+        }
+        path.munic:hover {
+            stroke: #000;
+        }
     </style>
     </head>
     <body>
     <!--<div id="map-container">
         <svg id="map"></svg>
     </div>-->
-   
         <button id="1940Button" onclick="dataChanging(1940)" style="background-color: blue">1940</button>
         <button id="1944Button" onclick="dataChanging(1944)" style="background-color: blue">1944</button>
         <button id="1948Button" onclick="dataChanging(1948)" style="background-color: blue">1948</button>
@@ -42,11 +63,11 @@
         <button id="2008Button" onclick="dataChanging(2008)" style="background-color: blue">2008</button>
         <button id="2012Button" onclick="dataChanging(2012)" style="background-color: blue">2012</button>
         <button id="2016Button" onclick="dataChanging(2016)" style="background-color: red">2016</button>
-    
+
 
     
         
-    	<script src="cartogram.js"></script>
+        <script src="cartogram.js"></script>
         <script type="text/javascript">
             //d3 code here!
 // d3.select("body").append("h1").style("color","red").text("Manipulating DOM elements in D3");
@@ -55,8 +76,8 @@
 
         
 
-var canvasW = 800;
-var canvasH = 800;
+var canvasW = 1200;
+var canvasH = 1200;
 
 const images = {
     'HILARY CLINTON': "clinton.jpg",
@@ -66,7 +87,7 @@ const images = {
     'MITT ROMNEY': "romney.jpg",
     'GEORGE W. BUSH': "bush.jpg",
     'JOHN KERRY': "kerry.jpg",
-    'ROBERT DOLE ': "dole.jpg",
+    'ROBERT DOLE ': "dole.jpg",
     'BILL CLINTON': "billclinton.jpg",
     'AL GORE': "gore.jpg",
     'MICHAEL S. DUKAKIS': "dukakis.jpg",
@@ -176,10 +197,8 @@ d3.csv("election-results-" + year + ".csv",function (data) {
   
   var svg = d3.select("body").append("svg")
 
-	.attr("width",canvasW)
-	.attr("height", canvasH);
-
-
+    .attr("width",canvasW)
+    .attr("height", canvasH);
 
 // for (var i = 1940; i <= 2016; i = i+4) {
 //     let democrat = 0;
@@ -212,18 +231,18 @@ d3.csv("election-results-" + year + ".csv",function (data) {
     
 
 function dataDoing(data) {
-	for (let i = 0; i < data.length; i++) {
-		var col = "#000000";
-		console.log(data[i].State);
+    for (let i = 0; i < data.length; i++) {
+        var col = "#000000";
+        console.log(data[i].State);
         console.log(XYvals[data[i].State]);
-		var strokewid = 0;
-		// if(data[i].D_Percentage > data[i].R_Percentage) {
-		// 	var col = "#0000FF";
-		// }
-		// else {
-			var col = d3.rgb(128+ +(data[i].R_Percentage-data[i].D_Percentage)*7,50,128-(data[i].R_Percentage-data[i].D_Percentage)*7);
-		//}
-        var difference = data[i].R_Percentage - data[i].D_Percentage;
+        var strokewid = 0;
+        // if(data[i].D_Percentage > data[i].R_Percentage) {
+        //  var col = "#0000FF";
+        // }
+        // else {
+            var col = d3.rgb(128+ +(data[i].R_Percentage-data[i].D_Percentage)*7,50,128-(data[i].R_Percentage-data[i].D_Percentage)*7);
+        //}
+        var difference = data[i].R_Percentage - data[i].D_Percentage
         if (difference > 50) {
             col = d3.rgb(136,0,0);
         }
@@ -239,7 +258,7 @@ function dataDoing(data) {
         else if (difference > 10) {
             col = d3.rgb(254, 146, 110);
         }
-        else if (data[i].R_Votes - data[i].D_Votes > 0) {
+        else if (difference > 0) {
             col = d3.rgb(253,187,159);
         }
         else if (difference > -10) {
@@ -263,22 +282,22 @@ function dataDoing(data) {
 
         var stateGroup = svg.append("g");
 
-    	var stateRect = stateGroup
-			.append("rect")
-			.attr("x", 50+XYvals[data[i].State][0]*50)
-	    	.attr("y", XYvals[data[i].State][1]*50)
-	    	.attr("width", 50)
-	    	.attr("height", 50)
-	    	.attr("class", function(d) {
-	            var c = "Hey";
-	            return c;
-        	});
+        var stateRect = stateGroup
+            .append("rect")
+            .attr("x", XYvals[data[i].State][0]*50)
+            .attr("y", XYvals[data[i].State][1]*50)
+            .attr("width", 50)
+            .attr("height", 50)
+            .attr("class", function(d) {
+                var c = "Hey";
+                return c;
+            });
             //.text(function(d){return data[i].Abbreviation + '\n'+ data[i].Total_EV})
             //.attr("x", XYvals[data[i].State][0]*50)
             //.attr("y", XYvals[data[i].State][1]*50+25)
 
         var stateText = stateGroup.append("text").style("fill","black")
-            .attr("x", 50+XYvals[data[i].State][0]*50)
+            .attr("x", XYvals[data[i].State][0]*50)
             .attr("y", XYvals[data[i].State][1]*50+25);
             
 
@@ -304,16 +323,14 @@ function dataDoing(data) {
             .append("tspan").attr("font-size", "12px").attr('dy', '1.1em').attr("x", 65 + +candidateGroup.attr("x"))
             .text(data[i].D_Nominee + ", " + data[i].D_Votes + " (" + data[i].D_Percentage + "%)")
             .append("tspan").attr('dy', '7em').attr("x", 65 + +candidateGroup.attr("x"))
-            .text(data[i].R_Nominee + ", " + data[i].R_Votes + " (" + data[i].R_Percentage + "%)")
-            .append("tspan").attr('dy', '2.1em').attr("x", 65 + +candidateGroup.attr("x"))
-            .text(data[i].Total_EV);
-            var imageClinton = candidateGroup.append("svg:image")
+            .text(data[i].R_Nominee + ", " + data[i].R_Votes + " (" + data[i].R_Percentage + "%)");
+            var imageDem = candidateGroup.append("svg:image")
                 .attr('x', candidateGroup.attr("x"))
                 .attr('y', 30 + +candidateGroup.attr("y"))
                 .attr('width', 60)
                 .attr('height', 75)
                 .attr("xlink:href", images[data[i].D_Nominee]);  
-            var imageTrump = candidateGroup.append("svg:image")
+            var imageRep = candidateGroup.append("svg:image")
                 .attr('x', candidateGroup.attr("x"))
                 .attr('y', 105 + +candidateGroup.attr("y"))
                 .attr('width', 60)
@@ -329,20 +346,17 @@ function dataDoing(data) {
             .style("stroke", "#000000")
             .style("stroke-width", strokewid);
 
-	}
+    }
 };
 
 var imageLegend = svg.append("svg:image")
                 .attr('x', 0)
                 .attr('y', 400)
-                .attr('width', 800)
+                .attr('width', 600)
                 .attr('height', 75)
                 .attr("xlink:href", "electoralmap-legend.png");
-
-
 
 
         </script>
     </body>
 </html>
-

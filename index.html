@@ -366,14 +366,14 @@
 														doIt((1960 + +a));
 													}, 5000 );
 											    }
-												else if( a < howManyTimes ){
+												else if( a <= howManyTimes ){
 											    	d3.selectAll("#SpecialNews").remove();
 											    	d3.selectAll("#UAEline").remove();
 											    	//d3.selectAll("#OilNews").remove();
 											    	console.log(a);
 											        setTimeout( function almostSortadoIt() { 
 														console.log("YEAH " + a);
-														if (a < howManyTimes) {
+														if (a <= howManyTimes) {
 															doIt((1960 + +a));
 														}
 													}, 200 );
